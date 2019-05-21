@@ -1,2 +1,3 @@
-# swipeguide_data_assignment
-Data Engineer Assignment by SwipeGuide
+# SwipeGuide Data Engineering Assignment
+
+Problem Statement -> [Here](sg-data-challenge.md)
