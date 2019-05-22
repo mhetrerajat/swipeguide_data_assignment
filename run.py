@@ -11,4 +11,4 @@ def recommend(path):
 
 
 if __name__ == "__main__":
-    recommend()
+    recommend()  # pylint: disable=no-value-for-parameter
