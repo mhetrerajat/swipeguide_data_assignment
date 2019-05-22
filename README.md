@@ -6,12 +6,19 @@ Problem Statement -> [Here](sg-data-challenge.md)
 
 ![Code Coverage](coverage.svg)
 
-#### Requirements
+### Requirements
 
--  Python 3.7
+- Python 3.7
 
+### Assumptions
 
+- 
 
-#### Assumptions
+### Approach
 
--   
+- Clean all columns
+
+| Column    | Tasks                                           |
+| --------- | ----------------------------------------------- |
+| content   | Remove capitalization, punctuations, slugify it |
+| timestamp | Convert to datatime                             |
