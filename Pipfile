@@ -8,6 +8,8 @@ yapf = "*"
 autoflake = "*"
 isort = "*"
 coverage = "*"
+pylint = "*"
+coverage-badge = "*"
 
 [packages]
 click = "*"
