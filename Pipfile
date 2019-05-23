@@ -15,6 +15,7 @@ coverage-badge = "*"
 click = "*"
 pandas = "*"
 python-slugify = "*"
+distance = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,4 +1,5 @@
 import json
+import click
 
 
 class StorageManager(object):
@@ -19,6 +20,13 @@ class StorageManager(object):
         Returns:
             list -- Data in the form of list of dicts
         """
-        f = open(self.path, 'r')
-        data = json.loads(f.read())
-        return data
+
+        click.echo('Reading: %s' % click.format_filename(self.path))
+
+        try:
+            f = open(self.path, 'r')
+            data = json.loads(f.read())
+            return data
+        except FileNotFoundError as e:
+            click.secho(str(e), fg='red')
+            raise

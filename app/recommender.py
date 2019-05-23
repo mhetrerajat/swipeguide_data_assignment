@@ -2,6 +2,9 @@ from datetime import datetime
 
 import pandas as pd
 from slugify import slugify
+import click
+import distance
+from datetime import datetime, timedelta
 
 from app.storage_manager import StorageManager
 
@@ -48,5 +51,33 @@ class Recommender(object):
         # Clean data
         df = self.clean(df)
 
-        recommendations = pd.DataFrame([{'url': 'asd', 'tags': ''}])
-        return df
+        # User level events count
+        user_events_count = df.groupby(
+            by=['user_id', 'event_type']).nunique().id.unstack()
+
+        page_views_df = df.query('event_type == "pageview"')
+
+        recommendations = []
+        for idx, row in page_views_df.iterrows():
+            user_id = row.user_id
+            page_view_time = row.date
+            threshold_time = page_view_time - timedelta(minutes=30)
+
+            _df = df.query(
+                'user_id == @user_id & event_type == "search" & date >= @threshold_time & date <= @page_view_time'
+            )
+            if _df.shape[0]:
+                mdf = pd.merge(_df, _df.shift(1), on=_df.index)
+                mdf.fillna(value='', inplace=True)
+                f = lambda x: distance.nlevenshtein(x.content_x, x.content_y)
+                mdf['distance'] = mdf.apply(f, axis=1)
+                result = mdf.query('content_y != "" & distance > 0.6')
+                tags = result.content_y.tolist()
+                if tags:
+                    recommendations.append({
+                        'url': row.url,
+                        'tags': ",".join(tags)
+                    })
+
+        recommendations = pd.DataFrame(recommendations)
+        return recommendations
