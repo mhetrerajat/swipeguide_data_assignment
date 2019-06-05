@@ -13,7 +13,7 @@ class Recommender(object):
     def __init__(self, path):
         self.path = path
 
-    def _read(self, path):
+    def _read(self, path=None):
         """Fetches data with the help of StorageManager and creates DataFrame
         
         Arguments:
@@ -22,6 +22,9 @@ class Recommender(object):
         Returns:
             df -- Data of JSON file as a DataFrame
         """
+
+        path = path if path else self.path
+
         storage = StorageManager(path)
         df = pd.DataFrame([x for x in storage.fetch()])
         return df
