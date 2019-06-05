@@ -44,6 +44,11 @@ class Recommender(object):
         return df
 
     def get(self):
+        """Processes data and calculate recommended tags for url
+        
+        Returns:
+            recommendations (pandas.DataFrame) -- recommended tags for urls
+        """
 
         # Read data
         df = self._read(self.path)
@@ -58,10 +63,13 @@ class Recommender(object):
         page_views_df = df.query('event_type == "pageview"')
 
         recommendations = []
+        last_page_view = datetime(1970, 1, 1)
         for idx, row in page_views_df.iterrows():
             user_id = row.user_id
             page_view_time = row.date
-            threshold_time = page_view_time - timedelta(minutes=30)
+            threshold_time = max(page_view_time - timedelta(minutes=30),
+                                 last_page_view)
+            last_page_view = page_view_time
 
             _df = df.query(
                 'user_id == @user_id & event_type == "search" & date >= @threshold_time & date <= @page_view_time'
