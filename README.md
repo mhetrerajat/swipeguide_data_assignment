@@ -84,14 +84,3 @@ make test # Runs all test cases
 make report # Runs all test cases and generates test coverage report
 ```
 
-### Documentation
-
-To generate documentation for Code base:
-
-```bash
-# Current Working Directory -> swipeguide_data_assignment
-
-cd docs
-make docs # Generates documentation
-make view # Opens in browser
-```
