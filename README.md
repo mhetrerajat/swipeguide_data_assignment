@@ -26,9 +26,7 @@ Problem Statement -> [Here](sg-data-challenge.md)
 
 - Above couple of steps performed repeatedly for each pageview event and userid pair. The processed search events gives tags for page view url.
 
-
-
- NOTE:
+ NOTE:
 
 - Pipenv is required to run this project. Installation instruction for pipenv can be found [here](https://github.com/pypa/pipenv)
 - Otherwise, virtualenv can be used. **requirements.txt** also is given. Installation instruction for virtualenv can be found [here](https://github.com/pypa/virtualenv)
@@ -46,6 +44,9 @@ Problem Statement -> [Here](sg-data-challenge.md)
 - Run recommender
   
   ```bash
+  # Current Working Directory -> swipeguide_data_assignment
+  # Env is activated with pipenv shell
+  
   python run.py sample_data.json
   ```
 
@@ -83,4 +84,3 @@ To run all test cases
 make test # Runs all test cases
 make report # Runs all test cases and generates test coverage report
 ```
-
