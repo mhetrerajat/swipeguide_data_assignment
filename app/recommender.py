@@ -27,6 +27,14 @@ class Recommender(object):
         return df
 
     def clean(self, df):
+        """Does preprocessing on data
+        
+        Arguments:
+            df {pandas.DataFrame} -- Data loaded as dataframe
+        
+        Returns:
+            df {pandas.DataFrame} -- Preprocessed data
+        """
         # Change data types as per necessity
         df = df.astype({'timestamp': int})
 
@@ -47,7 +55,7 @@ class Recommender(object):
         """Processes data and calculate recommended tags for url
         
         Returns:
-            recommendations (pandas.DataFrame) -- recommended tags for urls
+            recommendations {pandas.DataFrame} -- recommended tags for urls
         """
 
         # Read data
