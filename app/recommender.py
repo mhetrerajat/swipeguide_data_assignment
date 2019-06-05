@@ -71,13 +71,18 @@ class Recommender(object):
         page_views_df = df.query('event_type == "pageview"')
 
         recommendations = []
-        last_page_view = datetime(1970, 1, 1)
+        last_page_views = {}
+        default_page_view_time = datetime(1970, 1, 1)
         for idx, row in page_views_df.iterrows():
             user_id = row.user_id
             page_view_time = row.date
+
+            last_page_view = last_page_views.get(user_id,
+                                                 default_page_view_time)
+
             threshold_time = max(page_view_time - timedelta(minutes=30),
                                  last_page_view)
-            last_page_view = page_view_time
+            last_page_views.update({user_id: page_view_time})
 
             _df = df.query(
                 'user_id == @user_id & event_type == "search" & date >= @threshold_time & date <= @page_view_time'
