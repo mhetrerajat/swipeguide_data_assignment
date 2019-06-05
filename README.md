@@ -49,6 +49,30 @@ Problem Statement -> [Here](sg-data-challenge.md)
   python run.py sample_data.json
   ```
 
+### Real World Scenarios
+
+Extension to above problem statement considering the real world scenarios are
+
+- Length of session can be dynamic i.e Instead of considering fixed duration of 30 minutes, session can be calculate based on few conditions - 
+  
+  - Lot of consecutive search events will be within short time period, because when user want to search for something they will search or type for their query in short period of time without any major time pause until they find out the results they were looking for or give up in frustration. So the time difference between two consecutive queries can be considered to be within certain threshold.
+  
+  - The user can have multiple information needs within the time threshold, and we cannot identify them as different sessions by time partitioning only. For this case, we can use edit distance similarity consecutive queries to identify different information needs.
+
+- The recommended tags are nothing but the significant queries that affect the user behavior, here user visits (pageview event) the URL. The segregation between the tags and a bunch of keystrokes dependents multiple factors like how user types query. The typing scenarios can be like - 
+  
+  - Types query incrementally without a reformulation until finding the desired result and do pageview event.
+  
+  - Types query incrementally and then presses backspace to clear few or all characters. This case could happen when user want to rephrase his/her query
+  
+  - Copy paste query from somewhere else and then make few changes to it 
+  
+  - Types query incrementally and then presses backspace to clear few characters and then adding new characters
+
+- The user historical activity can be used to check the trust factor of user inputs. i.e Older the user (more historical activity) higher the weight of tags calculated from his/her query streams. This may help in finding out authenticated and quality tags for the URL. This technique can only be used when a particular URL has a lot of page views and search events across users. 
+
+- If a URL has a lot of tags only from search streams, then the page's content can be used to find out the most relevant words that describe/represent the page content and then take the intersection of these words with search stream only tags to find out the top recommended tags. The relevant words for a page can be calculated with techniques like TF-IDF.
+
 ### Test
 
 To run all test cases
